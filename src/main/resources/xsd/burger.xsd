@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://testsoap.pl/example"
+           targetNamespace="http://testsoap.pl/example">
+
+    <xs:include schemaLocation="ingredient.xsd"/>
+
+    <xs:element name="getBurgerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getBurgerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="burger" type="tns:burger"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="burger">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="ingredients">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ingredient" type="tns:ingredient" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
