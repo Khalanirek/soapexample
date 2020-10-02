@@ -1,5 +1,6 @@
 package com.example.soapexample;
 
+import com.example.soapexample.client.Client;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

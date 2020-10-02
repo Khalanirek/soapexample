@@ -1,7 +1,8 @@
 <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://testsoap.pl/example" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://testsoap.pl/example" targetNamespace="http://testsoap.pl/example">
     <wsdl:types>
         <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://testsoap.pl/example">
-            <xs:element name="getBurger">
+            <xs:include schemaLocation="ingredient.xsd"/>
+            <xs:element name="getBurgerRequest">
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="id" type="xs:long"/>
@@ -19,24 +20,26 @@
                 <xs:sequence>
                     <xs:element name="id" type="xs:long"/>
                     <xs:element name="name" type="xs:string"/>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" name="ingredients" type="tns:ingredient"/>
-                    </xs:sequence>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="ingredient">
-                <xs:sequence>
-                    <xs:element name="id" type="xs:long"/>
-                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="ingredients">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="ingredient" type="tns:ingredient"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
                 </xs:sequence>
             </xs:complexType>
         </xs:schema>
     </wsdl:types>
+    <wsdl:message name="getBurgerRequest">
+        <wsdl:part element="tns:getBurgerRequest" name="getBurgerRequest"> </wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getBurgerResponse">
         <wsdl:part element="tns:getBurgerResponse" name="getBurgerResponse"> </wsdl:part>
     </wsdl:message>
     <wsdl:portType name="BurgerPort">
         <wsdl:operation name="getBurger">
+            <wsdl:input message="tns:getBurgerRequest" name="getBurgerRequest"> </wsdl:input>
             <wsdl:output message="tns:getBurgerResponse" name="getBurgerResponse"> </wsdl:output>
         </wsdl:operation>
     </wsdl:portType>
@@ -44,6 +47,9 @@
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="getBurger">
             <soap:operation soapAction=""/>
+            <wsdl:input name="getBurgerRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
             <wsdl:output name="getBurgerResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
@@ -51,7 +57,7 @@
     </wsdl:binding>
     <wsdl:service name="BurgerPortService">
         <wsdl:port binding="tns:BurgerPortSoap11" name="BurgerPortSoap11">
-            <soap:address/>
+            <soap:address location="http://localhost:8080/ws"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

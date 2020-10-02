@@ -25,6 +25,28 @@
 		</dependency>
 
 		<dependency>
+			<groupId>wsdl4j</groupId>
+			<artifactId>wsdl4j</artifactId>
+			<version>1.6.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -42,6 +64,48 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>2.5.0</version>
+				<executions>
+					<execution>
+						<id>webservice_classes</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<!-- Use all XSDs under the west directory for sources here. -->
+							<sources>
+								<source>src/main/resources/xsd/burger.xsd</source>
+							</sources>
+							<!-- Package name of the generated sources. -->
+							<packageName>com.example.soapexample.webservice.gen</packageName>
+						</configuration>
+					</execution>
+					<!-- used if generated from WSDL
+					<execution>
+						<id>client_wsdl_classes</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							 Use all XSDs under the west directory for sources here.
+							<sourceType>WSDL</sourceType>
+							<sources>
+								<source>src/main/resources/wsdl/burgers.wsdl</source>
+							</sources>
+							Package name of the generated sources.
+							<packageName>com.example.soapexample.client.gen</packageName>
+
+    							 Don't clear the output directory before generating the sources.
+     							 Clearing the output directory removes the se.west schema from above.
+							<clearOutputDir>false</clearOutputDir>
+						</configuration>
+					</execution>
+-->
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
